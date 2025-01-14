@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Line Graph</title>
+</head>
+<body>
+  <canvas id="customLineChart" width="400" height="200"></canvas>
+
+  <script>
+    // Function to draw a line on the canvas
+    function drawLine(ctx, startX, startY, endX, endY, color) {
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    // Sample data for multiple lines
+    const data = {
+      labels: ['January', 'February', 'March', 'April', 'May'],
+      datasets: [
+        {
+          label: 'Line 1',
+          data: [10, 20, 15, 25, 18],
+          color: 'rgb(255, 99, 132)',
+        },
+        {
+          label: 'Line 2',
+          data: [15, 25, 18, 30, 22],
+          color: 'rgb(54, 162, 235)',
+        },
+        // Add more datasets as needed
+      ],
+    };
+
+    // Function to render the chart
+    function renderChart(canvasId, data) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+
+      // Draw axes and labels (customize as needed)
+      // ...
+
+      // Draw lines based on the data
+      data.datasets.forEach((dataset, i) => {
+        const datasetColor = dataset.color || 'black';
+
+        dataset.data.forEach((value, j) => {
+          const startX = j * (canvas.width / (data.labels.length - 1));
+          const startY = canvas.height - (value * (canvas.height / getMaxValue(data.datasets)));
+          const endX = (j + 1) * (canvas.width / (data.labels.length - 1));
+          const endY = canvas.height - (dataset.data[j + 1] * (canvas.height / getMaxValue(data.datasets)));
+
+          drawLine(ctx, startX, startY, endX, endY, datasetColor);
+        });
+      });
+    }
+
+    // Helper function to get the maximum value in the datasets
+    function getMaxValue(datasets) {
+      return Math.max(...datasets.map(dataset => Math.max(...dataset.data)));
+    }
+
+    // Render the chart
+    renderChart('customLineChart', data);
+  </script>
+</body>
+</html>

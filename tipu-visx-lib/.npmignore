@@ -1,0 +1,26 @@
+# Exclude source files
+src/
+*.ts
+*.tsx
+
+# Exclude build/test configuration files
+rollup.config.js
+tsconfig.json
+.eslintrc.js
+jest.config.js
+
+# Exclude dependency lock files
+package-lock.json
+yarn.lock
+
+# Exclude logs and system files
+*.log
+.DS_Store
+
+# Exclude local testing setup
+playground/
+example/
+
+# Exclude version control files
+.git/
+.gitignore
